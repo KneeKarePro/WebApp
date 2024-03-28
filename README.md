@@ -24,7 +24,7 @@ The rotary and sensory data that is collected will be sent to the web app.
 Patient users will be able to upload their data over this connection, and clinician users will be able to view the data that is uploaded with respect to each patient they have.
 
 ### Goals
-To be able to read all data from the embedded system for each patient, and to be able to store and present all relevant data to the clinician from their patients.
+To be able to read all data from the brace for each patient such that all relevant data is available to the clinician via web app.
 
 ### Timeline
 * Have the web app establish connection via bluetooth with the ESP32 chip
