@@ -13,9 +13,10 @@ App can launch and has completed basic setup.
 --> documented work time <--
 
 ## Project Architecture
+The javascript web app will connect to be connected to the ESP32, which will send connected data via API connect. The web app will have the rotary/sensory data such that measurements can be easily read by both the user and the physician.
 
-_Future implementations will be connecting to the ESP32 device_
-The web app will connect to the ESP32, which will send connected data via API connect.
+
+The ESP32 is currently not connected to the web app.
 
 ## Known bugs
 N/A
