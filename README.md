@@ -1,5 +1,5 @@
 # WebApp
-Software web app for the KneeCarePro project
+Software web app for the Knee Care Pro project
 
 ### Main Contributers
 Daniyal Ansari \
