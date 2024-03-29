@@ -17,7 +17,7 @@ Nicole Meers
 [Work Record Blog](https://kneekarepro.blogspot.com/)
 
 ## Project Architecture
-This is a javascript web app that will allow users to login to their respective portal and view their data.\
+This is a javascript web app using React and Node.js that will allow users to login to their respective portal and view their data.\
 This web app will connect to the ESP32, which will be connected to the Adafruit Rotary Trinkey on the brace itself.
 The connection will be done via API connect over bluetooth.\
 The rotary and sensory data that is collected will be sent to the web app.
