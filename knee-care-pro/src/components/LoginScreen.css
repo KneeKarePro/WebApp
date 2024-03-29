@@ -1,0 +1,105 @@
+/* Full page styling */
+.login-container {
+  background-color: #00B2A9; /* A refreshing background color, inspired by the logo */
+  background-image: linear-gradient(135deg, #00B2A9 0%, #00B2A9 50%, #FF61A6 100%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Logo image styling */
+.logo {
+  max-width: 300px; /* Increased size of the logo */
+  height: auto;
+  margin-bottom: 1rem; /* Reduced space to bring the motto closer to the logo */
+}
+
+/* Motto styling - positioned closer to the logo */
+.motto {
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 300;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem; /* Adjusted spacing to bring the motto closer to the logo */
+  max-width: 600px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* Login form container */
+.login-section {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 420px; /* Adjusted size for the login section */
+  margin: 1rem auto;
+}
+
+/* Input field styling */
+.login-input {
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+/* Hover and focus states for inputs */
+.login-input:hover,
+.login-input:focus {
+  border-color: #00B2A9;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 178, 169, 0.2);
+}
+
+/* Button styling */
+.login-button, .role-button {
+  background-color: #FF61A6;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  min-width: 250px; /* Ensuring buttons are wider */
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover and focus states for buttons */
+.login-button:hover,
+.login-button:focus,
+.role-button:hover,
+.role-button:focus {
+  background-color: #ff4081;
+  box-shadow: 0 4px 14px rgba(255, 64, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Cancel button specific styling */
+.login-button.cancel {
+  background-color: #6c757d;
+  margin-top: 1rem;
+}
+
+.login-button.cancel:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-container {
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+}

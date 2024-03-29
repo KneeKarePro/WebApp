@@ -1,0 +1,18 @@
+.user-profile {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.loading-gif {
+  background-color: #f5f7f9; /* Background color to match the GIF */
+  border-radius: 50%; /* Circle around the GIF */
+  padding: 10px;
+  display: inline-block; /* To keep the circle shape */
+  margin-top: 20px;
+}
