@@ -14,7 +14,7 @@ Nicole Meers
 
 
 ### Work Flow
---> documented work time <--
+[Work Record Blog](https://kneekarepro.blogspot.com/)
 
 ## Project Architecture
 This is a javascript web app that will allow users to login to their respective portal and view their data.\
