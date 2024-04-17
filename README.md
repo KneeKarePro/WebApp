@@ -44,4 +44,4 @@ N/A
 
 ### Additional Progress
 _The ESP32 can successfully host its own wifi and establish a connection via websocket._\
-_We will transition to using a potentiometer to measure the rotation of the knee brace_
+_We will transition to using a potentiometer to measure the rotation of the knee brace._
