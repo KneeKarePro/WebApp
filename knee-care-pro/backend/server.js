@@ -1,15 +1,15 @@
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 const http = require("http");
 
 // Initialize WebSocket Server on port 80
 const wss = new WebSocket.Server({ port: 80 }, () => {
-  console.log('WebSocket Server started on port 80');
+  console.log("WebSocket Server started on port 80");
 });
 
 // Handle WebSocket connections
-wss.on('connection', function connection(ws) {
-  console.log('A new client connected');
-  ws.on('close', () => console.log('Client disconnected'));
+wss.on("connection", function connection(ws) {
+  console.log("A new client connected");
+  ws.on("close", () => console.log("Client disconnected"));
 });
 
 class DataPoller {
@@ -37,7 +37,7 @@ class DataPoller {
       // Optionally send error message to WebSocket clients
       wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
-          client.send('ERROR: ' + error.message);
+          client.send("ERROR: " + error.message);
         }
       });
     });
@@ -65,6 +65,5 @@ const options = {
   path: "/",
   method: "GET",
 };
-const poller = new DataPoller(options, 500);
+const poller = new DataPoller(options, 50);
 poller.start();
-
