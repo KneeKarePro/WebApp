@@ -3,39 +3,35 @@ import loadingGif from '../assets/loadingscreen.gif'; // Ensure the path is corr
 import './UserProfile.css';
 
 const UserProfile = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState([]); // Initialize data as an empty array
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Adjust this URL to match your WebSocket server
-    const ws = new WebSocket('ws://localhost:80');
+    const username = 'testuser'; // Replace with the actual username
 
-    ws.onopen = () => {
-      console.log('WebSocket Connected');
-      setLoading(false); // Connection open, hide loading screen
-    };
+    const fetchData = async () => {
+      try {
+        console.log('Fetching data for:', username); // Debugging line
+        const response = await fetch(`http://localhost:5000/data/${username}`);
+        console.log('Response:', response); // Debugging line
 
-    ws.onmessage = (event) => {
-      console.log('Data received:', event.data);
-      setData(event.data);
-      setLoading(false); // Data received, hide loading screen
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Data received:', result); // Log the result to see its structure
+          setData(result.data); // Access the array within the data key
+          setLoading(false);
+        } else {
+          console.error('Error fetching data:', response.statusText);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
     };
+    
+    fetchData();
 
-    ws.onerror = (error) => {
-      console.error('WebSocket Error:', error);
-      setLoading(true); // Error occurred, show loading screen
-    };
-
-    ws.onclose = () => {
-      console.error('WebSocket Disconnected');
-      setLoading(true); // Connection closed, show loading screen
-      // Optionally implement reconnection logic here
-    };
-
-    // Cleanup function to close WebSocket when component unmounts
-    return () => {
-      ws.close();
-    };
   }, []);
 
   return (
@@ -43,18 +39,25 @@ const UserProfile = () => {
       <h1>Patient Profile</h1>
       {loading ? (
         <div>
-          <p>Looking for Trinket device...</p>
+          <p>Loading data...</p>
           <img src={loadingGif} alt="Loading" className="loading-gif" />
         </div>
-      ) : (
+      ) : data.length > 0 ? (
         <div>
-          <p>Potentiometer value: {data}</p>
-          {/* Optionally render more data/details here */}
+          {data.map((item, index) => (
+            <div key={index}>
+              <p>Angle: {item.angle}</p>
+              <p>Rotation: {item.rotation}</p>
+              <p>Timestamp: {new Date(item.timestamp).toLocaleString()}</p>
+              <hr />
+            </div>
+          ))}
         </div>
+      ) : (
+        <p>No data available</p>
       )}
     </div>
   );
 };
 
 export default UserProfile;
-
