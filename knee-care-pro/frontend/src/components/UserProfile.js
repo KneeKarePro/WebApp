@@ -1,62 +1,193 @@
+// UserProfile.js
+
 import React, { useState, useEffect } from 'react';
-import loadingGif from '../assets/loadingscreen.gif'; // Ensure the path is correct
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  Grid,
+  Card,
+  CardContent,
+} from '@mui/material';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './UserProfile.css';
 
 const UserProfile = () => {
-  const [data, setData] = useState([]); // Initialize data as an empty array
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loadingData, setLoadingData] = useState(true);
+  const [loadingStats, setLoadingStats] = useState(true);
+  const username = 'testuser'; // Replace with the actual username
 
   useEffect(() => {
-    const username = 'testuser'; // Replace with the actual username
-
+    // Fetch user data
     const fetchData = async () => {
       try {
-        console.log('Fetching data for:', username); // Debugging line
         const response = await fetch(`http://localhost:5000/data/${username}`);
-        console.log('Response:', response); // Debugging line
-
         if (response.ok) {
           const result = await response.json();
-          console.log('Data received:', result); // Log the result to see its structure
-          setData(result.data); // Access the array within the data key
-          setLoading(false);
+          setData(result.data);
+          setLoadingData(false);
         } else {
           console.error('Error fetching data:', response.statusText);
-          setLoading(false);
+          setLoadingData(false);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoading(false);
+        setLoadingData(false);
       }
     };
-    
-    fetchData();
 
-  }, []);
+    // Fetch user stats
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/data/stats/${username}`);
+        if (response.ok) {
+          const result = await response.json();
+          setStats(result.stats);
+          setLoadingStats(false);
+        } else {
+          console.error('Error fetching stats:', response.statusText);
+          setLoadingStats(false);
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+        setLoadingStats(false);
+      }
+    };
+
+    fetchData();
+    fetchStats();
+  }, [username]);
+
+  // Prepare data for the chart (last 24 hours)
+  const chartData = data
+    .filter(item => {
+      const itemDate = new Date(item.timestamp);
+      const now = new Date();
+      return now - itemDate <= 24 * 60 * 60 * 1000; // Last 24 hours
+    })
+    .map(item => ({
+      time: new Date(item.timestamp).toLocaleTimeString(),
+      angle: item.angle,
+      rotation: item.rotation,
+    }));
 
   return (
-    <div className="user-profile">
-      <h1>Patient Profile</h1>
-      {loading ? (
-        <div>
-          <p>Loading data...</p>
-          <img src={loadingGif} alt="Loading" className="loading-gif" />
-        </div>
-      ) : data.length > 0 ? (
-        <div>
-          {data.map((item, index) => (
-            <div key={index}>
-              <p>Angle: {item.angle}</p>
-              <p>Rotation: {item.rotation}</p>
-              <p>Timestamp: {new Date(item.timestamp).toLocaleString()}</p>
-              <hr />
-            </div>
-          ))}
+    <Container maxWidth="lg" className="user-profile-container">
+      <Typography variant="h4" className="user-profile-title">
+        Patient Profile: {username}
+      </Typography>
+
+      {loadingData || loadingStats ? (
+        <div className="user-profile-loading">
+          <CircularProgress />
+          <Typography className="user-profile-loading-text">Loading data...</Typography>
         </div>
       ) : (
-        <p>No data available</p>
+        <>
+          <Grid container spacing={4}>
+            {/* Data Table */}
+            <Grid item xs={12} md={6}>
+              <Paper elevation={3} className="user-profile-paper">
+                <Typography variant="h6" className="user-profile-subtitle">
+                  Data Records
+                </Typography>
+                {data.length > 0 ? (
+                  <Table size="small" className="user-profile-table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Timestamp</TableCell>
+                        <TableCell align="right">Angle</TableCell>
+                        <TableCell align="right">Rotation</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data.map((item, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{new Date(item.timestamp).toLocaleString()}</TableCell>
+                          <TableCell align="right">{item.angle.toFixed(2)}</TableCell>
+                          <TableCell align="right">{item.rotation.toFixed(2)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <Typography>No data available</Typography>
+                )}
+              </Paper>
+            </Grid>
+
+            {/* Statistics */}
+            <Grid item xs={12} md={6}>
+              <Paper elevation={3} className="user-profile-paper">
+                <Typography variant="h6" className="user-profile-subtitle">
+                  Statistics
+                </Typography>
+                {stats ? (
+                  <Grid container spacing={2}>
+                    {['angle', 'rotation'].map(param => (
+                      <Grid item xs={12} key={param}>
+                        <Card variant="outlined" className="user-profile-card">
+                          <CardContent className="user-profile-card-content">
+                            <Typography className="user-profile-card-title">
+                              {param.toUpperCase()}
+                            </Typography>
+                            <Typography className="user-profile-card-text">
+                              Mean: {stats[param].mean.toFixed(2)}
+                            </Typography>
+                            <Typography className="user-profile-card-text">
+                              Std Dev: {stats[param].std.toFixed(2)}
+                            </Typography>
+                            <Typography className="user-profile-card-text">
+                              Min: {stats[param].min.toFixed(2)}
+                            </Typography>
+                            <Typography className="user-profile-card-text">
+                              Max: {stats[param].max.toFixed(2)}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                ) : (
+                  <Typography>No statistics available</Typography>
+                )}
+              </Paper>
+            </Grid>
+
+            {/* Chart */}
+            <Grid item xs={12}>
+              <Paper elevation={3} className="user-profile-paper user-profile-chart">
+                <Typography variant="h6" className="user-profile-subtitle">
+                  Last 24 Hours Data
+                </Typography>
+                {chartData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={400}>
+                    <LineChart data={chartData}>
+                      <XAxis dataKey="time" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="angle" stroke="#8884d8" />
+                      <Line type="monotone" dataKey="rotation" stroke="#82ca9d" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <Typography>No data available for the last 24 hours</Typography>
+                )}
+              </Paper>
+            </Grid>
+          </Grid>
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 

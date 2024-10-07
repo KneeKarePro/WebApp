@@ -1,13 +1,91 @@
-.user-profile {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 90%;
-  max-width: 600px;
-  margin: 40px auto;
+/* Container styling */
+.user-profile-container {
+  margin-top: 2rem;
+  font-family: 'Roboto', sans-serif;
 }
+
+/* Typography overrides */
+.user-profile-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.user-profile-subtitle {
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: 1rem;
+}
+
+/* Paper component styling */
+.user-profile-paper {
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+/* Table styling */
+.user-profile-table {
+  margin-top: 1rem;
+}
+
+.user-profile-table th,
+.user-profile-table td {
+  font-size: 0.95rem;
+}
+
+.user-profile-table thead {
+  background-color: #ecf0f1;
+}
+
+.user-profile-table tbody tr:hover {
+  background-color: #e0f7fa;
+}
+
+/* Card styling */
+.user-profile-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+.user-profile-card-content {
+  padding: 1rem;
+}
+
+.user-profile-card-title {
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.user-profile-card-text {
+  font-size: 0.95rem;
+  color: #7f8c8d;
+}
+
+/* Chart container */
+.user-profile-chart {
+  margin-top: 2rem;
+}
+
+/* Loading spinner */
+.user-profile-loading {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.user-profile-loading-text {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .user-profile-container {
+    padding: 0 1rem;
+  }
+}
+
+
 
 .loading-gif {
   background-color: #f5f7f9; /* Background color to match the GIF */
