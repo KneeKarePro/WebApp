@@ -1,5 +1,3 @@
-// UserProfile.js
-
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -81,9 +79,15 @@ const UserProfile = () => {
 
   return (
     <Container maxWidth="lg" className="user-profile-container">
-      <Typography variant="h4" className="user-profile-title">
-        Patient Profile: {username}
-      </Typography>
+      {/* Updated Title Section */}
+      <div className="user-profile-header">
+        <Typography variant="h4" className="user-profile-title">
+          Patient Profile
+        </Typography>
+        <Typography variant="h5" className="user-profile-username">
+          {username}
+        </Typography>
+      </div>
 
       {loadingData || loadingStats ? (
         <div className="user-profile-loading">
@@ -100,24 +104,26 @@ const UserProfile = () => {
                   Data Records
                 </Typography>
                 {data.length > 0 ? (
-                  <Table size="small" className="user-profile-table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Timestamp</TableCell>
-                        <TableCell align="right">Angle</TableCell>
-                        <TableCell align="right">Rotation</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data.map((item, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{new Date(item.timestamp).toLocaleString()}</TableCell>
-                          <TableCell align="right">{item.angle.toFixed(2)}</TableCell>
-                          <TableCell align="right">{item.rotation.toFixed(2)}</TableCell>
+                  <div className="user-profile-table-wrapper">
+                    <Table size="small" className="user-profile-table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Timestamp</TableCell>
+                          <TableCell align="left">Angle</TableCell> {/* Changed to left align */}
+                          <TableCell align="left">Rotation</TableCell> {/* Changed to left align */}
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHead>
+                      <TableBody>
+                        {data.map((item, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{new Date(item.timestamp).toLocaleString()}</TableCell>
+                            <TableCell align="left">{item.angle.toFixed(2)}</TableCell> {/* Changed to left align */}
+                            <TableCell align="left">{item.rotation.toFixed(2)}</TableCell> {/* Changed to left align */}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 ) : (
                   <Typography>No data available</Typography>
                 )}
@@ -166,7 +172,7 @@ const UserProfile = () => {
             <Grid item xs={12}>
               <Paper elevation={3} className="user-profile-paper user-profile-chart">
                 <Typography variant="h6" className="user-profile-subtitle">
-                  Last 24 Hours Data
+                  Last 24 Hour Data
                 </Typography>
                 {chartData.length > 0 ? (
                   <ResponsiveContainer width="100%" height={400}>

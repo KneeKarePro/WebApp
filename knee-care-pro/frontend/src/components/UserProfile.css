@@ -1,50 +1,81 @@
-/* Container styling */
+/* Apply black background to the entire page */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Dark Theme Container Styling */
 .user-profile-container {
   margin-top: 2rem;
   font-family: 'Roboto', sans-serif;
+  background-color: #121212;  /* Black background */
+  color: #fff;
+  min-height: 100vh;  /* Ensures it stretches the full page height */
 }
 
 /* Typography overrides */
 .user-profile-title {
   font-weight: 600;
-  color: #2c3e50;
+  color: #ffffff;
   margin-bottom: 1rem;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
 }
 
 .user-profile-subtitle {
   font-weight: 500;
-  color: #34495e;
+  color: #b3b3b3;
   margin-bottom: 1rem;
 }
 
-/* Paper component styling */
+/* Paper component styling (Data Records, Statistics, 24-Hour Chart) */
 .user-profile-paper {
   padding: 1.5rem;
-  background-color: #f9f9f9;
+  background-color: #1c1c1c !important;  /* Enforce dark background */
+  border-radius: 8px;
+  border: 4px solid;
+  border-image: linear-gradient(45deg, #00ffd1, #f165a6) 1 !important;  /* Gradient teal to fuchsia */
+  box-shadow: none !important;  /* No inner glow */
 }
 
-/* Table styling */
+/* Table styling (Data Records Section) */
 .user-profile-table {
   margin-top: 1rem;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #1c1c1c !important;  /* Same background as the rest */
+  border-radius: 8px;
+  border: 4px solid !important;
+  overflow: hidden;
+  box-shadow: none !important;  /* Remove glow */
 }
 
 .user-profile-table th,
 .user-profile-table td {
   font-size: 0.95rem;
+  color: #fff;
+  padding: 8px;
+  text-align: center;
 }
 
 .user-profile-table thead {
-  background-color: #ecf0f1;
+  background-color: #252525;
 }
 
 .user-profile-table tbody tr:hover {
-  background-color: #e0f7fa;
+  background-color: rgba(0, 255, 209, 0.2);
 }
 
-/* Card styling */
+/* Simple styling for the Statistics Section */
 .user-profile-card {
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
+  background-color: #1c1c1c !important;
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #00ffd1, #f165a6) 1 !important;  /* Gradient teal to fuchsia */
+  border-radius: 8px;
+  box-shadow: none !important;  /* No glow effect */
 }
 
 .user-profile-card-content {
@@ -52,18 +83,25 @@
 }
 
 .user-profile-card-title {
-  font-size: 1.1rem;
-  color: #2c3e50;
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
 }
 
 .user-profile-card-text {
   font-size: 0.95rem;
-  color: #7f8c8d;
+  color: #b3b3b3;
 }
 
-/* Chart container */
+/* Chart container (24-Hour Data) */
 .user-profile-chart {
   margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #1c1c1c !important;
+  border-radius: 8px;
+  border: 4px solid;
+  border-image: linear-gradient(45deg, #00ffd1, #f165a6) 1 !important;  /* Gradient teal to fuchsia */
+  box-shadow: none !important;
 }
 
 /* Loading spinner */
@@ -85,12 +123,75 @@
   }
 }
 
-
-
-.loading-gif {
-  background-color: #f5f7f9; /* Background color to match the GIF */
-  border-radius: 50%; /* Circle around the GIF */
-  padding: 10px;
-  display: inline-block; /* To keep the circle shape */
-  margin-top: 20px;
+/* Container for title and username */
+.user-profile-header {
+  text-align: center;
+  margin-bottom: 2rem;  /* Adjust margin for balance on the page */
 }
+
+/* Container for title and username */
+.user-profile-header {
+  text-align: center;
+  margin-bottom: 2rem;  /* Adjust margin for balance on the page */
+}
+
+/* Typography for Patient Profile Title */
+.user-profile-title {
+  font-weight: 800;  /* Bolder title */
+  font-size: 2.5rem;  /* Larger size for dashboard prominence */
+  color: #ffffff;  /* Plain white text */
+  text-transform: uppercase;  /* Make the title uppercase */
+  letter-spacing: 2px;
+  margin-bottom: 0.2rem;  /* Reduced margin for less space under title */
+  display: inline-block;
+  position: relative;
+}
+
+/* Underline effect for the title */
+.user-profile-title::after {
+  content: '';
+  display: block;
+  width: 60%;  /* Centered underline, reduced width */
+  margin: 0.3rem auto;  /* Adjust the space between the title and underline */
+  height: 2px;
+  background-color: #ffffff;
+}
+
+/* Typography for the Username */
+.user-profile-username {
+  font-weight: 400;  /* Lighter weight for contrast with title */
+  font-size: 1.8rem;  /* Smaller size */
+  color: #ffffff;  /* White */
+  margin-top: 0.3rem;  /* Reduce space between underline and username */
+  text-align: center;
+}
+
+/* Scrollable table body */
+.user-profile-table-wrapper {
+  max-height: 300px;  /* Set a max-height for the table wrapper */
+  overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+/* Ensure the table and all its elements are aligned left */
+.user-profile-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-profile-table th,
+.user-profile-table td {
+  text-align: left; /* Enforces left alignment for all cells */
+  padding: 8px;
+  color: #fff;
+}
+
+.user-profile-table thead {
+  background-color: #252525;
+}
+
+
+
+
+
+
+
