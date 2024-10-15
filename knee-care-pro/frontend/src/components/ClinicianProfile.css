@@ -1,35 +1,59 @@
+/* Dark Theme for Clinician Profile */
 .clinician-profile {
-  text-align: center; /* Centers the text of all child elements, including the heading */
-  background: #ffffff;
+  text-align: center;
+  background: #1c1c1c;  /* Dark background */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   width: 90%;
-  max-width: 600px;
-  margin: 40px auto; /* Centers the container */
+  max-width: 800px;
+  margin: 40px auto;  /* Centers the container */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);  /* Subtle shadow */
+  color: #fff;  /* White text for contrast */
+  border: 2px solid; 
+  border-image: linear-gradient(45deg, #00ffd1, #f165a6) 1;
 }
 
-/* If you have specific styles for h1 that override the container's text alignment, ensure it's centered */
+/* Styling the header */
 .clinician-profile h1 {
-  text-align: center;
+  font-weight: 450;
+  font-size: 2rem;  /* Large size for dashboard prominence */
+  letter-spacing: 1.5px;
+  color: #ffffff;  /* White text */
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);  /* Subtle glowing effect */
 }
 
+/* Client list container */
 .clients-list {
   list-style: none;
   padding: 0;
   margin-top: 20px;
 }
 
+/* Each client item styling */
 .client-item {
-  background: #f5f7f9; /* Light background to match the theme */
+  background: #252525;  /* Dark background for each item */
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 10px;
+  color: #fff;  /* Ensure all client names are white */
   transition: background-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  border: 1px solid transparent;  /* Transparent border */
 }
 
+/* Hover effect for client item */
 .client-item:hover {
-  background-color: #e1e5e9; /* Slightly darker on hover */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #303030;  /* Slightly lighter on hover */
+  box-shadow: 0 5px 15px rgba(0, 255, 209, 0.5);  /* Soft glow on hover */
+  border-color: #00ffd1;  /* Teal border on hover */
 }
+
+/* Disabled client item styling has been removed */
+
+/* Hover effect only for all client items */
+.client-item:hover .client-item-text {
+  color: #f165a6;  /* Fuchsia text on hover */
+}
+

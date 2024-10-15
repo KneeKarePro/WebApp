@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './UserProfile.css';
+import accountIcon from '../assets/account_icon.png'; // Ensure the account icon image is imported correctly
 
 const UserProfile = () => {
   const [data, setData] = useState([]);
@@ -84,9 +85,12 @@ const UserProfile = () => {
         <Typography variant="h4" className="user-profile-title">
           Patient Profile
         </Typography>
-        <Typography variant="h5" className="user-profile-username">
-          {username}
-        </Typography>
+
+        {/* Account icon and username on the right */}
+        <div className="account-info">
+          <img src={accountIcon} alt="Account Icon" className="account-icon" />
+          <Typography variant="body1" className="account-username">{username}</Typography>
+        </div>
       </div>
 
       {loadingData || loadingStats ? (
@@ -109,16 +113,16 @@ const UserProfile = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell>Timestamp</TableCell>
-                          <TableCell align="left">Angle</TableCell> {/* Changed to left align */}
-                          <TableCell align="left">Rotation</TableCell> {/* Changed to left align */}
+                          <TableCell align="left">Angle</TableCell>
+                          <TableCell align="left">Rotation</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {data.map((item, index) => (
                           <TableRow key={index}>
                             <TableCell>{new Date(item.timestamp).toLocaleString()}</TableCell>
-                            <TableCell align="left">{item.angle.toFixed(2)}</TableCell> {/* Changed to left align */}
-                            <TableCell align="left">{item.rotation.toFixed(2)}</TableCell> {/* Changed to left align */}
+                            <TableCell align="left">{item.angle.toFixed(2)}</TableCell>
+                            <TableCell align="left">{item.rotation.toFixed(2)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>

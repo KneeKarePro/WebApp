@@ -149,12 +149,12 @@ html, body {
 
 /* Underline effect for the title */
 .user-profile-title::after {
-  content: '';
-  display: block;
+  display: none;
+  /*content: '';
   width: 60%;  /* Centered underline, reduced width */
-  margin: 0.3rem auto;  /* Adjust the space between the title and underline */
-  height: 2px;
-  background-color: #ffffff;
+  /*margin: 0.3rem auto;  /* Adjust the space between the title and underline */
+  /*height: 2px;
+  background-color: #ffffff;*/
 }
 
 /* Typography for the Username */
@@ -189,9 +189,42 @@ html, body {
   background-color: #252525;
 }
 
+/* Container for account info */
+.account-info {
+  display: flex;
+  align-items: center;  /* Vertically align the icon and username */
+  justify-content: flex-end;  /* Align to the right */
+  margin-right: 30px;  /* Add some margin from the right */
+}
 
+/* Account icon styling */
+.account-icon {
+  width: 75px;  /* Larger size for the icon */
+  height: 75px;  /* Larger size for the icon */
+  margin-right: 1px;  /* Space between icon and username */
+  filter: invert(100%);  /* Make the icon white */
+}
 
+/* Username styling */
+.account-username {
+  color: #fff;
+  font-size: 1.8rem;  /* Larger size for the username */
+  font-weight: 600;
+}
 
+/* Flex container for Patient Profile and Account info */
+.user-profile-header {
+  display: flex;
+  justify-content: space-between;  /* Space between Patient Profile and account info */
+  align-items: center;  /* Align items in the center */
+  margin-bottom: 2rem;
+}
 
-
-
+/* Patient Profile heading styling */
+.user-profile-title {
+  font-weight: 800;  /* Bolder title */
+  font-size: 2.5rem;  /* Large size for dashboard prominence */
+  color: #ffffff;     /* Plain white text */
+  letter-spacing: 2px;
+  margin-bottom: 0.2rem;  /* Reduced margin for less space under title */
+}

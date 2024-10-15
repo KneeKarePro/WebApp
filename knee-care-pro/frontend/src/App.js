@@ -1,20 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginScreen from './components/LoginScreen';
-import UserProfile from './components/UserProfile';
 import ClinicianProfile from './components/ClinicianProfile';
-import './App.css';
+import UserProfile from './components/UserProfile'; // Ensure this import is correct
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginScreen />} />
-        <Route path="/patient-profile" element={<UserProfile />} />
         <Route path="/clinician-profile" element={<ClinicianProfile />} />
+        {/* Handle both routes for Patient Profile */}
+        <Route path="/patient-profile" element={<UserProfile />} />  {/* For direct patient login */}
+        <Route path="/patient-profile/:username" element={<UserProfile />} />  {/* For clinician navigation */}
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
+
