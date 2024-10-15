@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './ClinicianProfile.css';
 
 const clients = [
-  { name: 'Test User', dob: '04/20/1969', username: 'testuser' }, // Works with Flask
+  { name: 'Test User', dob: '05/21/1970', username: 'testuser' }, // Works with Flask
   { name: 'Jane Smith', dob: '02/14/1975', username: 'janesmith' }, // Placeholder
   { name: 'Chris Johnson', dob: '03/30/1982', username: 'chrisjohnson' }, // Placeholder
   { name: 'Patricia Brown', dob: '04/25/1990', username: 'patriciabrown' }, // Placeholder
