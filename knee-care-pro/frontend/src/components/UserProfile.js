@@ -12,16 +12,21 @@ import {
   Grid,
   Card,
   CardContent,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './UserProfile.css';
-import accountIcon from '../assets/account_icon.png'; // Ensure the account icon image is imported correctly
+import accountIcon from '../assets/account_icon.png';
 
 const UserProfile = () => {
   const [data, setData] = useState([]);
   const [stats, setStats] = useState(null);
   const [loadingData, setLoadingData] = useState(true);
   const [loadingStats, setLoadingStats] = useState(true);
+  const [timeFrame, setTimeFrame] = useState('24h'); // State to track selected time frame
   const username = 'testuser'; // Replace with the actual username
 
   useEffect(() => {
@@ -65,28 +70,34 @@ const UserProfile = () => {
     fetchStats();
   }, [username]);
 
-  // Prepare data for the chart (last 24 hours)
+  // Prepare chart data based on the selected time frame
   const chartData = data
     .filter(item => {
       const itemDate = new Date(item.timestamp);
       const now = new Date();
-      return now - itemDate <= 24 * 60 * 60 * 1000; // Last 24 hours
+      const timeDifference = {
+        '24h': 24 * 60 * 60 * 1000,
+        '48h': 48 * 60 * 60 * 1000,
+        '1w': 7 * 24 * 60 * 60 * 1000,
+        '1m': 30 * 24 * 60 * 60 * 1000,
+        '1y': 365 * 24 * 60 * 60 * 1000,
+        'all': Infinity, // Include all data
+      };
+      return now - itemDate <= timeDifference[timeFrame];
     })
     .map(item => ({
-      time: new Date(item.timestamp).toLocaleTimeString(),
+      time: new Date(item.timestamp).toLocaleDateString('en-US') + ' ' + new Date(item.timestamp).toLocaleTimeString(),
       angle: item.angle,
       rotation: item.rotation,
     }));
 
   return (
     <Container maxWidth="lg" className="user-profile-container">
-      {/* Updated Title Section */}
+      {/* Header Section */}
       <div className="user-profile-header">
         <Typography variant="h4" className="user-profile-title">
           Patient Profile
         </Typography>
-
-        {/* Account icon and username on the right */}
         <div className="account-info">
           <img src={accountIcon} alt="Account Icon" className="account-icon" />
           <Typography variant="body1" className="account-username">{username}</Typography>
@@ -101,7 +112,7 @@ const UserProfile = () => {
       ) : (
         <>
           <Grid container spacing={4}>
-            {/* Data Table */}
+            {/* Data Records Section */}
             <Grid item xs={12} md={6}>
               <Paper elevation={3} className="user-profile-paper">
                 <Typography variant="h6" className="user-profile-subtitle">
@@ -134,7 +145,7 @@ const UserProfile = () => {
               </Paper>
             </Grid>
 
-            {/* Statistics */}
+            {/* Statistics Section */}
             <Grid item xs={12} md={6}>
               <Paper elevation={3} className="user-profile-paper">
                 <Typography variant="h6" className="user-profile-subtitle">
@@ -156,8 +167,7 @@ const UserProfile = () => {
                               Std Dev: {stats[param].std.toFixed(2)}
                             </Typography>
                             <Typography className="user-profile-card-text">
-                              Min: {stats[param].min.toFixed(2)}
-                            </Typography>
+                              Min: {stats[param].min.toFixed(2)}</Typography>
                             <Typography className="user-profile-card-text">
                               Max: {stats[param].max.toFixed(2)}
                             </Typography>
@@ -172,12 +182,30 @@ const UserProfile = () => {
               </Paper>
             </Grid>
 
-            {/* Chart */}
+            {/* Chart with Time Frame Selector */}
             <Grid item xs={12}>
               <Paper elevation={3} className="user-profile-paper user-profile-chart">
-                <Typography variant="h6" className="user-profile-subtitle">
-                  Last 24 Hour Data
-                </Typography>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h6" className="user-profile-subtitle">
+                    Analytics
+                  </Typography>
+                  <FormControl size="small" sx={{ minWidth: 150 }}>
+                    <InputLabel className="user-profile-select-label">Time Frame</InputLabel>
+                    <Select
+                      value={timeFrame}
+                      onChange={(e) => setTimeFrame(e.target.value)}
+                      label="Time Frame"
+                      className="user-profile-select"
+                    >
+                      <MenuItem value="24h">Last 24 Hours</MenuItem>
+                      <MenuItem value="48h">Last 48 Hours</MenuItem>
+                      <MenuItem value="1w">Last Week</MenuItem>
+                      <MenuItem value="1m">Last Month</MenuItem>
+                      <MenuItem value="1y">Last Year</MenuItem>
+                      <MenuItem value="all">All Time</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
                 {chartData.length > 0 ? (
                   <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={chartData}>
@@ -190,7 +218,7 @@ const UserProfile = () => {
                     </LineChart>
                   </ResponsiveContainer>
                 ) : (
-                  <Typography>No data available for the last 24 hours</Typography>
+                  <Typography>No data available for the selected time frame</Typography>
                 )}
               </Paper>
             </Grid>

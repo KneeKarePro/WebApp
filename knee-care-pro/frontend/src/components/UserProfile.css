@@ -228,3 +228,20 @@ html, body {
   letter-spacing: 2px;
   margin-bottom: 0.2rem;  /* Reduced margin for less space under title */
 }
+
+/*
+/* Dropdown styling for Time Frame Selector */
+.user-profile-select-label {
+  color: #A6A1AA !important; /* Match grey color of "Analytics" */
+}
+
+.user-profile-select {
+  color: #A6A1AA !important; /* Grey text for the initial dropdown value */
+} 
+
+.user-profile-select .MuiOutlinedInput-notchedOutline {
+  border-color: #A6A1AA !important; /* Grey border when static */
+}
+
+
+
