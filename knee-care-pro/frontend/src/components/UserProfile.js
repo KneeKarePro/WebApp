@@ -27,23 +27,23 @@ const UserProfile = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [loadingStats, setLoadingStats] = useState(true);
   const [timeFrame, setTimeFrame] = useState('24h'); // State to track selected time frame
+  const [error, setError] = useState(null);
   const username = 'testuser'; // Replace with the actual username
 
   useEffect(() => {
     // Fetch user data
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/data/${username}`);
+        const response = await fetch(`http://localhost:8000/data/${username}`);
         if (response.ok) {
           const result = await response.json();
-          setData(result.data);
-          setLoadingData(false);
+          setData(Array.isArray(result) ? result : []);
         } else {
-          console.error('Error fetching data:', response.statusText);
-          setLoadingData(false);
+          setError(`Error: ${response.statusText}`);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        setError(`Error fetching data: ${error.message}`);
+      } finally {
         setLoadingData(false);
       }
     };
@@ -51,7 +51,7 @@ const UserProfile = () => {
     // Fetch user stats
     const fetchStats = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/data/stats/${username}`);
+        const response = await fetch(`http://localhost:8000/data/stats/${username}`);
         if (response.ok) {
           const result = await response.json();
           setStats(result.stats);
@@ -70,26 +70,16 @@ const UserProfile = () => {
     fetchStats();
   }, [username]);
 
-  // Prepare chart data based on the selected time frame
-  const chartData = data
-    .filter(item => {
-      const itemDate = new Date(item.timestamp);
-      const now = new Date();
-      const timeDifference = {
-        '24h': 24 * 60 * 60 * 1000,
-        '48h': 48 * 60 * 60 * 1000,
-        '1w': 7 * 24 * 60 * 60 * 1000,
-        '1m': 30 * 24 * 60 * 60 * 1000,
-        '1y': 365 * 24 * 60 * 60 * 1000,
-        'all': Infinity, // Include all data
-      };
-      return now - itemDate <= timeDifference[timeFrame];
-    })
-    .map(item => ({
-      time: new Date(item.timestamp).toLocaleDateString('en-US') + ' ' + new Date(item.timestamp).toLocaleTimeString(),
-      angle: item.angle,
-      rotation: item.rotation,
-    }));
+  if (loadingData) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!data) return <div>No data available</div>;
+
+  // Prepare chart data with null check
+  const chartData = data?.map(item => ({
+    time: new Date(item.timestamp).toLocaleDateString('en-US') + ' ' + new Date(item.timestamp).toLocaleTimeString(),
+    angle: item.angle,
+    rotation: item.rotation,
+  })) || [];
 
   return (
     <Container maxWidth="lg" className="user-profile-container">
